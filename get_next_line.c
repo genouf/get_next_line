@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:12 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/06 14:45:16 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/08 10:50:51 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,13 @@ char	*get_next_line(int fd)
 	char	*buff;
 
 	result = 0;
+	if (BUFFER_SIZE <= 0)
+		return (NULL);
 	buff = initialize_buff(fd, BUFFER_SIZE);
 	if (buff == NULL)
 		return (NULL);
+	else if (*buff == '\n')
+		return (buff);
 	else
 		result = ft_realloc(result, buff);
 	return (next_line_core(fd, buff, result));

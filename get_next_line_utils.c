@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:29 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/06 14:45:32 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/08 10:41:10 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*ft_realloc(char *s1, char *s2)
 	result = (char *)malloc(sizeof(char) * size);
 	if (result == NULL)
 		return (NULL);
-	result[0] = '\0';
+	ft_bzero(result, size);
 	if (s1 != 0)
 		ft_strlcat(result, s1, size);
 	ft_strlcat(result, s2, size);
@@ -85,7 +85,7 @@ char	*initialize_buff(int fd, int buff_size)
 	char	*buff;
 	int		ret;
 
-	if (fd == 0)
+	if (fd == -1)
 		return (0);
 	buff = (char *)malloc(sizeof(char) * buff_size);
 	if (buff == NULL)
