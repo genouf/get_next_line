@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:29 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/08 10:41:10 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/10 19:01:59 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,62 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	size;
+	char	*result;
+	int		i;
+	int		j;
+
+	size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	result = (char *)malloc(sizeof(char) * size);
+	if (result == NULL)
+		return (NULL);
+	i = 0;
+	while (s1 && s1[i])
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2 && s2[j])
+	{
+		result[i] = s2[j];
+		j++;
+		i++;
+	}
+	result[i] = '\0';
+	return (result);
+}
+
+char	*ft_strjoinfinal(char const *s1, char const *s2, int id_line)
+{
+	size_t	size;
+	char	*result;
+	int		i;
+	int		j;
+
+	size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	result = (char *)malloc(sizeof(char) * size);
+	if (result == NULL)
+		return (NULL);
+	i = 0;
+	while (s1 && s1[i])
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2 && s2[j] && j < id_line + 1)
+	{
+		result[i] = s2[j];
+		j++;
+		i++;
+	}
+	result[i] = '\0';
+	return (result);
+}
+
 void	ft_bzero(void *s, size_t n)
 {
 	unsigned char	*p;
@@ -37,66 +93,30 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	i;
-	size_t	j;
+	unsigned char	*c;
+	unsigned char	*p;
+	unsigned char	*tmp;
+	size_t			i;
 
+	c = (unsigned char *)src;
+	p = (unsigned char *)dst;
+	tmp = (unsigned char *)malloc(len);
+	if (tmp == NULL)
+		return (NULL);
+	i = -1;
+	while (++i < len)
+		tmp[i] = c[i];
 	i = 0;
-	while (dst[i])
+	while (len > 0)
+	{
+		*p = tmp[i];
+		p++;
 		i++;
-	if (i > dstsize)
-		return (ft_strlen(src) + dstsize);
-	j = 0;
-	while (src[j] && (i + j + 1 < dstsize))
-	{
-		dst[i + j] = src[j];
-		j++;
+		len--;
 	}
-	dst[i + j] = '\0';
-	return (ft_strlen(src) + i);
-}
-
-char	*ft_realloc(char *s1, char *s2)
-{
-	size_t	s1_size;
-	size_t	s2_size;
-	size_t	size;
-	char	*result;
-
-	s1_size = ft_strlen(s1);
-	s2_size = ft_strlen(s2);
-	size = s1_size + s2_size + 1;
-	result = (char *)malloc(sizeof(char) * size);
-	if (result == NULL)
-		return (NULL);
-	ft_bzero(result, size);
-	if (s1 != 0)
-		ft_strlcat(result, s1, size);
-	ft_strlcat(result, s2, size);
-	ft_bzero(s2, s2_size);
-	if (s1_size != 0)
-		free(s1);
-	return (result);
-}
-
-char	*initialize_buff(int fd, int buff_size)
-{
-	char	*buff;
-	int		ret;
-
-	if (fd == -1)
-		return (0);
-	buff = (char *)malloc(sizeof(char) * buff_size);
-	if (buff == NULL)
-		return (NULL);
-	ft_bzero(buff, buff_size);
-	ret = read(fd, buff, 1);
-	if (ret == 0 || ret == -1)
-	{
-		free(buff);
-		return (0);
-	}
-	else
-		return (buff);
+	*p = '\0';
+	free(tmp);
+	return (dst);
 }
