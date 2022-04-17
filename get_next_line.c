@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:12 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/10 21:22:41 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/15 21:13:12 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,64 +28,45 @@ int	ft_find_line(char *buff, int buff_size)
 	return (-1);
 }
 
-char *ft_good_buffer(char *buff, int id_line, int fd, int *ret, char **result)
+int	ft_process(char **buff, char **result, int fd)
 {
-	if (id_line < 0)
+	int	ret;
+
+	if (buff && ft_strlen(*buff) == 0)
 	{
-		*result = ft_strjoin(*result, buff);
-		*ret = read(fd, buff, BUFFER_SIZE);
-		buff[BUFFER_SIZE] = '\0';
-		if (!(*ret))
-			return(*result);
-		ft_good_buffer(buff, ft_find_line(buff, BUFFER_SIZE), fd, ret, result);
+		ret = read(fd, *buff, BUFFER_SIZE);
+		if (ret < 1)
+			return(0);
+		(*buff)[ret] = '\0';
 	}
 	else
+		ret = 1;
+	if (ft_find_line(*buff, BUFFER_SIZE) == -1)
 	{
-		//printf("%d", id_line);
-		*result = ft_strjoinfinal(*result, buff, id_line);
-		buff = ft_memmove(buff, buff + id_line + 1, BUFFER_SIZE - id_line);
+		*result = ft_strjoin(*result, *buff);
+		ft_bzero(*buff, BUFFER_SIZE);
+		ft_process(buff, result, fd);
 	}
-	return (*result);
-}
-
-char	*ft_process(char *buff, int fd)
-{
-	char	*result;
-	int		ret;
-
-	result = 0;
-	//printf("my buff:%s\n", buff);
-	ft_good_buffer(buff, ft_find_line(buff, BUFFER_SIZE), fd, &ret, &result);
-	if (ret == 0)
-	{
-		printf("ici");
-		free(buff);
-	}
-	return(result);
+	else
+		ft_splitbuff(buff, result, ft_find_line(*buff, BUFFER_SIZE));
+	return(ret);
 }
 
 char	*get_next_line(int fd)
 {
 	char			*result;
 	static char		*buff = NULL;
-	int	ret;
 
 	if (BUFFER_SIZE < 1 || fd < 0)
 		return (NULL);
-	result = 0;
+	result = NULL;
 	if (!buff)
 	{
-		buff = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-		ret = read(fd, buff, BUFFER_SIZE);
-		buff[BUFFER_SIZE] = '\0';
-		if (!ret)
-		{
-			free(buff);
+		buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (buff == NULL)
 			return (NULL);
-		}
-		result = ft_process(buff, fd);
+		ft_bzero(buff, BUFFER_SIZE + 1);
 	}
-	else
-		result = ft_process(buff, fd);
+	ft_process(&buff, &result, fd);
 	return (result);
 }
