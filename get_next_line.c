@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:12 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/15 21:13:12 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/17 21:18:38 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,45 +28,42 @@ int	ft_find_line(char *buff, int buff_size)
 	return (-1);
 }
 
-int	ft_process(char **buff, char **result, int fd)
-{
-	int	ret;
-
-	if (buff && ft_strlen(*buff) == 0)
-	{
-		ret = read(fd, *buff, BUFFER_SIZE);
-		if (ret < 1)
-			return(0);
-		(*buff)[ret] = '\0';
-	}
-	else
-		ret = 1;
-	if (ft_find_line(*buff, BUFFER_SIZE) == -1)
-	{
-		*result = ft_strjoin(*result, *buff);
-		ft_bzero(*buff, BUFFER_SIZE);
-		ft_process(buff, result, fd);
-	}
-	else
-		ft_splitbuff(buff, result, ft_find_line(*buff, BUFFER_SIZE));
-	return(ret);
-}
 
 char	*get_next_line(int fd)
 {
 	char			*result;
-	static char		*buff = NULL;
+	static char		*save;
+	char			*buff;
+	int				ret;
+	char 			*tmp;
 
 	if (BUFFER_SIZE < 1 || fd < 0)
 		return (NULL);
 	result = NULL;
-	if (!buff)
+	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (buff == NULL)
+		return (NULL);
+	if (ft_strlen(save) > 0)
 	{
-		buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (buff == NULL)
-			return (NULL);
-		ft_bzero(buff, BUFFER_SIZE + 1);
+		buff = ft_strjoin(buff, save);
+		ret = 1;
 	}
-	ft_process(&buff, &result, fd);
+	else
+		ret = read(fd, buff, BUFFER_SIZE);
+	while (ret && ft_find_line(buff, BUFFER_SIZE) == -1)
+	{
+		result = ft_strjoin(result, buff);
+		ret = read(fd, buff, BUFFER_SIZE);
+		buff[ret] = '\0';
+	}
+	if (ret)
+	{
+		tmp = ft_subuff(buff, ft_find_line(buff, BUFFER_SIZE));
+		result = ft_strjoin(result, tmp);
+		free(tmp);
+		save = ft_substr(buff, ft_find_line(buff, BUFFER_SIZE) + 1);
+	}
+	else
+		result = ft_strjoin(result, buff);
 	return (result);
 }
