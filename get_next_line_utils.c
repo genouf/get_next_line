@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:29 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/19 19:32:09 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/19 19:36:43 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		j;
 
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
-	result = (char *)calloc(sizeof(char), size);
+	result = (char *)ft_calloc(sizeof(char), size);
 	if (result == NULL)
 		return (NULL);
 	i = 0;
@@ -83,7 +83,7 @@ char	*ft_substr(char *s, unsigned int start)
 	i = 0;
 	if (size == 0)
 		return (0);
-	result = (char *)calloc(sizeof(char), (size + 1));
+	result = (char *)ft_calloc(sizeof(char), (size + 1));
 	if (result == NULL)
 		return (NULL);
 	while (s[start] != '\0')
@@ -101,7 +101,7 @@ char	*ft_subuff(char *buff, int	id_line)
 	char	*result;
 	int		i;
 
-	result = (char *)calloc(sizeof(char), (id_line + 2));
+	result = (char *)ft_calloc(sizeof(char), (id_line + 2));
 	if (result == NULL)
 		return (NULL);
 	i = 0;

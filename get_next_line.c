@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:12 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/19 19:30:23 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/19 19:36:17 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ char	*get_next_line(int fd)
 		return (NULL);
 	result = NULL;
 	tmp = NULL;
-	buff = (char *)calloc(sizeof(char), (BUFFER_SIZE + 1));
+	buff = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
 	if (buff == NULL)
 		return (NULL);
-	bzero(buff, BUFFER_SIZE + 1);
 	if (ft_strlen(save) > 0)
 	{
 		buff = ft_strjoin(buff, save);
