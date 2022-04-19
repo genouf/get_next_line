@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:29 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/19 19:25:13 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/19 19:32:09 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,26 @@ size_t	ft_strlen(char *s)
 	return (i);
 }
 
+void	*ft_calloc(size_t count, size_t size)
+{
+	void			*result;
+	unsigned char	*p;
+	size_t			buff_size;
+
+	buff_size = count * size;
+	result = (void *)malloc(buff_size);
+	if (result == NULL)
+		return (NULL);
+	p = (unsigned char *)result;
+	while (buff_size > 0)
+	{
+		*p = 0;
+		p++;
+		buff_size--;
+	}
+	return (result);
+}
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	size;
@@ -32,7 +52,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		j;
 
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
-	result = (char *)malloc(sizeof(char) * size);
+	result = (char *)calloc(sizeof(char), size);
 	if (result == NULL)
 		return (NULL);
 	i = 0;
@@ -53,19 +73,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (result);
 }
 
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*p;
-
-	p = (unsigned char *)s;
-	while (n > 0)
-	{
-		*p = 0;
-		p++;
-		n--;
-	}
-}
-
 char	*ft_substr(char *s, unsigned int start)
 {
 	char	*result;
@@ -76,7 +83,7 @@ char	*ft_substr(char *s, unsigned int start)
 	i = 0;
 	if (size == 0)
 		return (0);
-	result = (char *)malloc(sizeof(char) * (size + 1));
+	result = (char *)calloc(sizeof(char), (size + 1));
 	if (result == NULL)
 		return (NULL);
 	while (s[start] != '\0')
@@ -94,7 +101,7 @@ char	*ft_subuff(char *buff, int	id_line)
 	char	*result;
 	int		i;
 
-	result = (char *)malloc(sizeof(char) * (id_line + 2));
+	result = (char *)calloc(sizeof(char), (id_line + 2));
 	if (result == NULL)
 		return (NULL);
 	i = 0;
@@ -105,28 +112,4 @@ char	*ft_subuff(char *buff, int	id_line)
 	}
 	result[i] = '\0';
 	return (result);
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*result;
-
-	result = (void *)malloc(count * size);
-	if (result == NULL)
-		return (NULL);
-	
-	return (result);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*p;
-
-	p = (unsigned char *)s;
-	while (n > 0)
-	{
-		*p = 0;
-		p++;
-		n--;
-	}
 }
