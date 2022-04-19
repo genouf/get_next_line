@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:44:39 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/17 21:12:03 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/17 21:32:33 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <string.h>
 
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
+size_t	ft_strlen(char *s);
 char	*ft_strjoin(char *s1, char *s2);
 void	ft_bzero(void *s, size_t n);
 char	*ft_substr(char *s, unsigned int start);

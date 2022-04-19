@@ -6,16 +6,18 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:29 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/17 21:16:09 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/19 19:25:13 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	i;
 
+	if (s == NULL)
+		return (0);
 	i = 0;
 	while (s && s[i] != '\0')
 		i++;
@@ -47,6 +49,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	}
 	result[i] = '\0';
+	free(s1);
 	return (result);
 }
 
@@ -71,6 +74,8 @@ char	*ft_substr(char *s, unsigned int start)
 
 	size = ft_strlen(s + start);
 	i = 0;
+	if (size == 0)
+		return (0);
 	result = (char *)malloc(sizeof(char) * (size + 1));
 	if (result == NULL)
 		return (NULL);
@@ -98,5 +103,30 @@ char	*ft_subuff(char *buff, int	id_line)
 		result[i] = buff[i];
 		i++;
 	}
+	result[i] = '\0';
 	return (result);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*result;
+
+	result = (void *)malloc(count * size);
+	if (result == NULL)
+		return (NULL);
+	
+	return (result);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*p;
+
+	p = (unsigned char *)s;
+	while (n > 0)
+	{
+		*p = 0;
+		p++;
+		n--;
+	}
 }
