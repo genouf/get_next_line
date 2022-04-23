@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:29 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/19 19:36:43 by genouf           ###   ########.fr       */
+/*   Updated: 2022/04/24 00:00:14 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	}
 	result[i] = '\0';
-	free(s1);
 	return (result);
 }
 
@@ -79,6 +78,7 @@ char	*ft_substr(char *s, unsigned int start)
 	size_t	i;
 	size_t	size;
 
+	start++;
 	size = ft_strlen(s + start);
 	i = 0;
 	if (size == 0)
@@ -96,7 +96,7 @@ char	*ft_substr(char *s, unsigned int start)
 	return (result);
 }
 
-char	*ft_subuff(char *buff, int	id_line)
+char	*ft_subuff(char *buff, int id_line)
 {
 	char	*result;
 	int		i;
