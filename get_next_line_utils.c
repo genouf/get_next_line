@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:29 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/24 00:00:14 by genouf           ###   ########.fr       */
+/*   Updated: 2022/05/09 10:15:42 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (result);
 }
 
-char	*ft_substr(char *s, unsigned int start)
+void	ft_substr(char *s, unsigned int start, char *save)
 {
-	char	*result;
 	size_t	i;
 	size_t	size;
 
@@ -82,18 +81,13 @@ char	*ft_substr(char *s, unsigned int start)
 	size = ft_strlen(s + start);
 	i = 0;
 	if (size == 0)
-		return (0);
-	result = (char *)ft_calloc(sizeof(char), (size + 1));
-	if (result == NULL)
-		return (NULL);
+		return ;
 	while (s[start] != '\0')
 	{
-		result[i] = s[start];
+		save[i] = s[start];
 		i++;
 		start++;
 	}
-	result[i] = '\0';
-	return (result);
 }
 
 char	*ft_subuff(char *buff, int id_line)

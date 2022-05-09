@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:12 by genouf            #+#    #+#             */
-/*   Updated: 2022/04/24 00:48:26 by genouf           ###   ########.fr       */
+/*   Updated: 2022/05/09 10:32:36 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,30 @@ int	ft_find_line(char *buff, int buff_size)
 	return (-1);
 }
 
-char	*initialize_buff(int *ret, char **save, int fd)
+char	*initialize_buff(int *ret, char *save, int fd)
 {
 	char	*new_buff;
+	int	i;
 
+	i = -1;
 	new_buff = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
 	if (new_buff == NULL)
 		return (NULL);
-	if (*save)
+	if (save[0] != '\0')
 	{
-		ft_strlcpy(new_buff, *save, BUFFER_SIZE + 1);
-		free(*save);
-		*save = 0;
+		ft_strlcpy(new_buff, save, BUFFER_SIZE + 1);
+		while (++i < BUFFER_SIZE + 1)
+			save[i] = '\0';
 		*ret = 1;
 	}
 	else
 	{
 		*ret = read(fd, new_buff, BUFFER_SIZE);
-		if (*ret < 1)
+		if (*ret == 0)
 		{
 			free(new_buff);
-			return (0);
-		}
+			return (NULL);
+		}	
 	}
 	return (new_buff);
 }
@@ -100,19 +102,19 @@ char	*process_line(char *result, char *buff, int	*ret, int fd)
 char	*get_next_line(int fd)
 {
 	char			*result;
-	static char		*save;
+	static char		save[BUFFER_SIZE + 1];
 	char			*buff;
 	int				ret;
 
-	if (BUFFER_SIZE < 1 || fd < 0)
+	if (BUFFER_SIZE < 1 || fd < 0 || (read(fd, 0, 0) <= -1))
 		return (NULL);
 	result = NULL;
-	buff = initialize_buff(&ret, &save, fd);
+	buff = initialize_buff(&ret, save, fd);
 	if (buff == NULL)
 		return (NULL);
 	result = process_line(result, buff, &ret, fd);
 	if (ret)
-		save = ft_substr(buff, ft_find_line(buff, BUFFER_SIZE + 1));
+		ft_substr(buff, ft_find_line(buff, BUFFER_SIZE + 1), save);
 	free(buff);
 	return (result);
 }
