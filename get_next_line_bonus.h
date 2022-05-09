@@ -6,12 +6,12 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:44:39 by genouf            #+#    #+#             */
-/*   Updated: 2022/05/09 11:21:43 by genouf           ###   ########.fr       */
+/*   Updated: 2022/05/09 11:50:15 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 /* INCLUDE */
 # include <unistd.h>

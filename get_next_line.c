@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:45:12 by genouf            #+#    #+#             */
-/*   Updated: 2022/05/09 10:32:36 by genouf           ###   ########.fr       */
+/*   Updated: 2022/05/09 11:50:02 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_find_line(char *buff, int buff_size)
 char	*initialize_buff(int *ret, char *save, int fd)
 {
 	char	*new_buff;
-	int	i;
+	int		i;
 
 	i = -1;
 	new_buff = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
